@@ -1,4 +1,6 @@
 package com.example.ExcelApi.service;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import com.example.ExcelApi.model.entity.DeveloperEntity;
@@ -7,7 +9,9 @@ public interface DeveloperService
 {
     //=================================
     public  boolean checkExcelFormat(MultipartFile file);
-    public  List<DeveloperEntity> convertExcelToListOfProduct(InputStream is);
+    public  List<DeveloperEntity> convertExcelToListOfDeveloper(InputStream is);
+    public  ByteArrayInputStream developersToExcel(List<DeveloperEntity> dev) throws IOException;
+    public ByteArrayInputStream load();                          
     public void save(MultipartFile file);
     public List<DeveloperEntity> getAllDeveloper();
 }
