@@ -10,7 +10,7 @@ public interface DeveloperService
     //=================================
     public  boolean checkExcelFormat(MultipartFile file);
     public  List<DeveloperEntity> convertExcelToListOfDeveloper(InputStream is);
-    public  ByteArrayInputStream developersToExcel(List<DeveloperEntity> dev) throws IOException;
+    public  ByteArrayInputStream developersToExcel(List<DeveloperEntity> dev);
     public ByteArrayInputStream load();                          
     public void save(MultipartFile file);
     public List<DeveloperEntity> getAllDeveloper();

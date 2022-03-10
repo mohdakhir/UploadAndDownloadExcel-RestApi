@@ -41,7 +41,7 @@ public class ServiceImplementation implements DeveloperService {
         }
     }
 
-    // read the data from excel file 
+    // read the data from excel file
     @Override
     public List<DeveloperEntity> convertExcelToListOfDeveloper(InputStream is) {
         List<DeveloperEntity> list = new ArrayList<>();
@@ -115,48 +115,46 @@ public class ServiceImplementation implements DeveloperService {
         }
 
     }
+
     @Override
     public ByteArrayInputStream load() {
         List<DeveloperEntity> developers = dr.findAll();
         ByteArrayInputStream in = developersToExcel(developers);
         return in;
-      }
+    }
 
     @Override
     public List<DeveloperEntity> getAllDeveloper() {
         return dr.findAll();
     }
-   
+
     public static String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-    static String[] HEADERs = { "id", "FirstName", "LastName", "designation", "PhoneNumber" };
-    static String SHEET = "DeveloperEntity";
-    @Override
-    public  ByteArrayInputStream developersToExcel(List<DeveloperEntity> developers){
+    static String[] HEADERs = { "Id", "Address", "Designation", "FirstName", "LastName", "Phone" };
+    static String SHEET = "developers";
+
+    public ByteArrayInputStream developersToExcel(List<DeveloperEntity> dev) {
         try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream();) {
             org.apache.poi.ss.usermodel.Sheet sheet = workbook.createSheet(SHEET);
-            // Header
             Row headerRow = sheet.createRow(0);
             for (int col = 0; col < HEADERs.length; col++) {
-              Cell cell = headerRow.createCell(col);
-              cell.setCellValue(HEADERs[col]);
+                Cell cell = headerRow.createCell(col);
+                cell.setCellValue(HEADERs[col]);
             }
             int rowIdx = 1;
-            for (DeveloperEntity developer : developers) {
-              Row row = sheet.createRow(rowIdx++);
-              row.createCell(0).setCellValue(developer.getId());
-              row.createCell(1).setCellValue(developer.getAddress());
-              row.createCell(2).setCellValue(developer.getDesignation());
-              row.createCell(3).setCellValue(developer.getFirstName());
-              row.createCell(4).setCellValue(developer.getLastName());
-              row.createCell(5).setCellValue(developer.getPhone());
+            for (DeveloperEntity de : dev) {
+                Row row = sheet.createRow(rowIdx++);
+                row.createCell(0).setCellValue(de.getId());
+                row.createCell(1).setCellValue(de.getAddress());
+                row.createCell(2).setCellValue(de.getDesignation());
+                row.createCell(3).setCellValue(de.getFirstName());
+                row.createCell(4).setCellValue(de.getLastName());
+                row.createCell(5).setCellValue(de.getPhone());
             }
             workbook.write(out);
             return new ByteArrayInputStream(out.toByteArray());
-          } catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException("fail to import data to Excel file: " + e.getMessage());
-          }
-
+        }
     }
-	
-}
 
+}
